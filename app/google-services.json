@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "575676917516",
+    "firebase_url": "https://and-testfirebase.firebaseio.com",
+    "project_id": "and-testfirebase",
+    "storage_bucket": "and-testfirebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575676917516:android:2e2b268986d15586",
+        "android_client_info": {
+          "package_name": "fiftyfive.and_testfirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "575676917516-1vtcb3qhjhsscmgq2l934j414eemhrrv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYq0I3sxgjMusdDfeBYEcytuG7nr5eZhk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
