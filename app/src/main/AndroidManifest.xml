@@ -36,4 +36,18 @@
     </service>
 
 
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <Button xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/button_click2Fire"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+             android:text="@string/click2Fire"
+            android:onClick="click2Fire" />
+    </LinearLayout>
+
 </manifest>
