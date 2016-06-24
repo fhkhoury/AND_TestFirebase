@@ -31,10 +31,19 @@ public class MainActivity extends AppCompatActivity {
         //MyFirebaseMessagingService.sendNotification("Mon MEssage");
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "MainActivity");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
+    }
+
     View.OnClickListener eventSender = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "button_sendEvent");
             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "eventSender");
             bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
