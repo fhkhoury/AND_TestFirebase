@@ -25,6 +25,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.google.firebase:firebase-core:9.0.2' //for Firebase Core
     compile 'com.google.firebase:firebase-messaging:9.0.2' //for Google Cloud Messaging and Notifications
+    compile 'com.google.android.gms:play-services-tagmanager:9.0.2'
+
 }
 
 // ADD THIS AT THE BOTTOM

@@ -9,16 +9,51 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="fiftyfive.and_testfirebase.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
-
     <Button xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/button_sendNotification"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Send Notification"
-    android:onClick="MyFirebaseMessagingService.sendNotification" />
-    
+    android:onClick="MyFirebaseMessagingService.sendNotification"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="39dp" />
+
+
+    <Button xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/button_sendEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share img with name"
+        android:layout_below="@+id/editText"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:hint="type img name here..."
+        android:layout_below="@+id/button_sendNotification"
+        android:layout_alignLeft="@+id/button_sendEvent"
+        android:layout_alignStart="@+id/button_sendEvent"
+        android:layout_marginTop="39dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="send eye color"
+        android:id="@+id/button_sendEyeColor"
+        android:layout_below="@+id/editText2"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText2"
+        android:hint="type eye color here..."
+        android:layout_marginTop="67dp"
+        android:layout_below="@+id/button_sendEvent"
+        android:layout_alignLeft="@+id/button_sendEvent"
+        android:layout_alignStart="@+id/button_sendEvent" />
+
 </RelativeLayout>
