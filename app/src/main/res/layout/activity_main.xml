@@ -12,13 +12,25 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Hello World!"
+        android:id="@+id/textView" />
 
     <Button xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/button_sendNotification"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Send Notification"
-    android:onClick="MyFirebaseMessagingService.sendNotification" />
+    android:onClick="MyFirebaseMessagingService.sendNotification"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true" />
+
+    <Button xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/button_sendEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_sendNotification"
+        android:layout_centerHorizontal="true"
+        android:text="Send an event"
+        android:layout_marginTop="55dp" />
     
 </RelativeLayout>
