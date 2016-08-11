@@ -5,17 +5,12 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.crash.FirebaseCrash;
-import com.google.firebase.messaging.FirebaseMessagingService;
-
 import static com.google.firebase.crash.FirebaseCrash.*;
-import static fiftyfive.and_testfirebase.MyFirebaseMessagingService.*;
+import com.google.firebase.crash.FirebaseCrash;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     public void click2Fire_hard(View v) {
         Bundle myBundle = new Bundle();
         mFirebaseAnalytics.logEvent("click2Fire_hard", myBundle);
+        Log.d("click2Fire_hard", "event sent");
     }
 
     //méthode pour faire partir un event après avoir cliqué sur un bouton
@@ -55,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         thisBundle.putString("eventAction", "fire");
         thisBundle.putString("eventLabel", "click2Fire_GTM");
         mFirebaseAnalytics.logEvent("click2Fire_GTM", thisBundle);
+        Log.d("click2Fire_GTM", "event sent");
     }
 
     //Send a notification
