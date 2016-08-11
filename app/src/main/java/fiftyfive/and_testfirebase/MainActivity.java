@@ -1,8 +1,10 @@
 package fiftyfive.and_testfirebase;
 
+import android.content.Context;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.View;
 
 import com.google.android.gms.appindexing.Action;
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
         // envoyer un tag d'écran via GTM vers Firebase & GA
         bundle.clear();
-        bundle.putString("screenName","Home");
+        bundle.putString("screenName","François");
         mFirebaseAnalytics.logEvent("openScreen", bundle);
 
     }
@@ -64,8 +66,16 @@ public class MainActivity extends AppCompatActivity {
     public void crash(View v){
         report(new Exception("My first Android non-fatal error"));
         FirebaseCrash.log("App is crashed");
+        FirebaseCrash.log(getPhoneNumber());
 
     }
+
+    public String getPhoneNumber() {
+        TelephonyManager tMgr = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+        return tMgr.getLine1Number();
+
+    }
+
 
     @Override
     public void onStart() {

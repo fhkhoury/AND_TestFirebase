@@ -51,4 +51,7 @@
             <category android:name="android.intent.category.BROWSABLE"/>
         </intent-filter>
     </activity>
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
 </manifest>
