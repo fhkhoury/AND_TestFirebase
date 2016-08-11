@@ -2,6 +2,7 @@ package fiftyfive.and_testfirebase;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     public void click2Fire_hard(View v) {
         Bundle myBundle = new Bundle();
         mFirebaseAnalytics.logEvent("click2Fire_hard", myBundle);
+        Log.d("click2Fire_hard", "event sent");
     }
 
     //méthode pour faire partir un event après avoir cliqué sur un bouton
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         thisBundle.putString("eventAction", "fire");
         thisBundle.putString("eventLabel", "click2Fire_GTM");
         mFirebaseAnalytics.logEvent("click2Fire_GTM", thisBundle);
+        Log.d("click2Fire_GTM", "event sent");
     }
 
     //Send a notification
