@@ -1,19 +1,12 @@
 package fiftyfive.and_testfirebase;
 
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.crash.FirebaseCrash;
-import com.google.firebase.messaging.FirebaseMessagingService;
-
 import static com.google.firebase.crash.FirebaseCrash.*;
-import static fiftyfive.and_testfirebase.MyFirebaseMessagingService.*;
+import com.google.firebase.crash.FirebaseCrash;
 
 public class MainActivity extends AppCompatActivity {
 
