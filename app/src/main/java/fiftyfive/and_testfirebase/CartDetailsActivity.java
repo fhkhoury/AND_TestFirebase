@@ -20,15 +20,15 @@ public class CartDetailsActivity extends AppCompatActivity {
     ListView mListView;
     ArrayList panier = new ArrayList<Item>();
     Bundle zeBundle = new Bundle();
+    Intent zeIntent = new Intent();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_details);
 
-        final Intent zeIntent = getIntent();
-        zeBundle = zeIntent.getBundleExtra(MainActivity.SUPERBUNDLE);
-        panier = zeIntent.getParcelableArrayListExtra("hello");
+        zeIntent = getIntent();
+
         Log.d("ACTION: ", "Bundle récupéré");
         Log.d("INFO: ", zeBundle.getString("screenName"));
 

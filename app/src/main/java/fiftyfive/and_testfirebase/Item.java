@@ -1,6 +1,7 @@
 package fiftyfive.and_testfirebase;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.SimpleExpandableListAdapter;
 
 /**
@@ -13,9 +14,33 @@ public class Item {
     String category;
     String brand;
     String variant;
-    double price;
+    Double price;
 
-    public Item getItemDetails(String itemName){
+    public Item(String zeSku, String zeName, String zeCategory, String zeBrand, String zeVariant, Double zePrice){
+        sku = zeSku;
+        name = zeName;
+        category = zeCategory;
+        brand = zeBrand;
+        variant = zeVariant;
+        price = zePrice;
+    }
+
+    public Bundle itemToBundle(){
+        Bundle returnedBundle = new Bundle();
+        returnedBundle.putString("sku", sku);
+        returnedBundle.putString("name", name);
+        returnedBundle.putString("category", category);
+        returnedBundle.putString("brand", brand);
+        returnedBundle.putString("variant", variant);
+        returnedBundle.putDouble("price", price);
+        return returnedBundle;
+    }
+
+    /*public Item bundleToItem(Bundle zeBundle){
+        return new Item();
+    }*/
+
+    /*public Item getItemDetails(String itemName){
         Item item = new Item();
         switch (itemName) {
             case "Playstation - 400€":
@@ -44,6 +69,6 @@ public class Item {
                 break;
         }
         return item;
-    }
+    }*/
 
 }

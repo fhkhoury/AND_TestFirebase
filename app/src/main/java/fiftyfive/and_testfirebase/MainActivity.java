@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         // send a hard-coded hit to FB when the app is opened
         Bundle bundle = new Bundle();
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
-
         Log.d("TAG: ", "APP_OPEN sent.");
 
         // send a hit to GA to log the screen name
@@ -127,8 +126,8 @@ public class MainActivity extends AppCompatActivity {
     //Add to Cart
     public void addToCart(View v){
         String selectedItemName = catalogue.getSelectedItem().toString();
-        Item item = new Item();
-        item.getItemDetails(selectedItemName);
+        //Item item = new Item();
+        //item.getItemDetails(selectedItemName);
         //cart.addItem(item);
         // send a hard-coded hit to FB when the app is opened
         Bundle bundle = new Bundle();
@@ -155,6 +154,12 @@ public class MainActivity extends AppCompatActivity {
         //intent.putExtra("cart", (Parcelable) cart.listeProduits);//pour passer le cart à envoyer
         startActivityForResult(intent, 0);
         Log.d("INFO: ", bundle.getString("screenName"));
+    }
+
+    //View product list
+    public void viewProductsList(View v){
+        Intent zeIntent = new Intent(MainActivity.this, ProductsListActivity.class);
+        startActivity(zeIntent);
     }
 
     public String getPhoneNumber() {

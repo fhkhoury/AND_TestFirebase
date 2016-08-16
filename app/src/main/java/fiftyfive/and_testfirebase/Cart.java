@@ -1,5 +1,6 @@
 package fiftyfive.and_testfirebase;
 
+import android.os.Bundle;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class Cart {
 
     Integer numberOfProducts;
     Double total;
-    List<Item> listeProduits;
+    ArrayList<Item> listeProduits;
 
     public  Cart(){
         numberOfProducts=0;
@@ -47,5 +48,12 @@ public class Cart {
         return panier;
     }
 
+    public ArrayList<Bundle> cart2Bundles(Cart cart) {
+        ArrayList<Bundle> cartBundled = new ArrayList<Bundle>();
+        for (Integer i=0; i<cart.numberOfProducts; i++){
+            cartBundled.add(cart.getItem(i).itemToBundle());
+        }
+        return cartBundled;
+    }
 
 }
