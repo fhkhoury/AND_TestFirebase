@@ -17,15 +17,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    compile 'com.google.android.gms:play-services-tagmanager:9.4.0'
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.google.firebase:firebase-core:9.0.2' //for Firebase Core
-    compile 'com.google.firebase:firebase-messaging:9.0.2' //for Google Cloud Messaging and Notifications
-    compile 'com.google.android.gms:play-services-appindexing:9.0.2'
+    compile 'com.google.firebase:firebase-messaging:9.0.2'
     compile 'com.google.firebase:firebase-crash:9.4.0'//for Firebase crash tool
 }
 
