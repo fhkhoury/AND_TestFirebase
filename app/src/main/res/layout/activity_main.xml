@@ -7,30 +7,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-
-    <Button xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/button_sendNotification"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Send Notification"
-    android:onClick="sendNotification" />
+        android:text="HELLO WORLD!" />
 
     <Button
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/button_click2Fire_hard"
+        android:id="@+id/button_click2Fire"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="click2Fire in hard"
-        android:onClick="click2Fire_hard"/>
-
-    <Button
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/button_click2Fire_GTM"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="click2Fire through GTM"
+        android:text="Fire to GA/FB via GTM"
         android:onClick="click2Fire_GTM"/>
+
 
     <Button
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -39,4 +25,25 @@
         android:layout_height="wrap_content"
         android:text="Crash the app"
         android:onClick="crash"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner" />;
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_addToCart"
+            android:text="Add to cart"
+            android:onClick="addToCart" />
+
+    <Button
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/button_cliCkCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vieuw your cart" />
+
+
+
 </LinearLayout>
