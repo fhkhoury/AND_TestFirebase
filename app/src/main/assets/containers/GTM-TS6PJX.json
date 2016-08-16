@@ -1,9 +1,9 @@
 {
 
-"fingerprint":"Mg$0",
+"fingerprint":"NA$0",
 
 "resource": {
-  "version":"2",
+  "version":"4",
   "macros":[
     {
       "function":"__e",
@@ -17,6 +17,30 @@
       "vtp_setDefaultValue":false,
       "vtp_eventType":"CUSTOM",
       "vtp_key":"screenName"
+    },
+    {
+      "function":"__md",
+      "instance_name":"event category",
+      "vendor_template_version":"1",
+      "vtp_setDefaultValue":false,
+      "vtp_eventType":"CUSTOM",
+      "vtp_key":"eventCategory"
+    },
+    {
+      "function":"__md",
+      "instance_name":"event action",
+      "vendor_template_version":"1",
+      "vtp_setDefaultValue":false,
+      "vtp_eventType":"CUSTOM",
+      "vtp_key":"eventAction"
+    },
+    {
+      "function":"__md",
+      "instance_name":"event label",
+      "vendor_template_version":"1",
+      "vtp_setDefaultValue":false,
+      "vtp_eventType":"CUSTOM",
+      "vtp_key":"eventLabel"
     },
     {
       "function":"__ai",
@@ -48,12 +72,39 @@
       "function":"__ua",
       "instance_name":"Open Screen GA",
       "vendor_template_version":"1",
+      "vtp_fieldsToSet":["list",["map","fieldName","screenName","value",["macro",1]]],
       "vtp_collectAdid":false,
       "vtp_trackType":"TRACK_SCREENVIEW",
       "vtp_trackingId":"UA-79851145-1",
       "vtp_enableUaRlsa":false,
       "vtp_enableUseInternalVersion":false,
       "tag_id":2
+    },
+    {
+      "function":"__ua",
+      "instance_name":"click 2 GA through GTM",
+      "vendor_template_version":"1",
+      "vtp_nonInteraction":false,
+      "vtp_fieldsToSet":["list",["map","fieldName",["macro",2],"value","eventCategory"],["map","fieldName",["macro",3],"value","eventAction"],["map","fieldName",["macro",4],"value","eventLabel"]],
+      "vtp_eventCategory":["macro",2],
+      "vtp_collectAdid":false,
+      "vtp_trackType":"TRACK_EVENT",
+      "vtp_eventAction":["macro",3],
+      "vtp_eventLabel":["macro",4],
+      "vtp_trackingId":"UA-79851145-1",
+      "vtp_enableUaRlsa":false,
+      "vtp_enableUseInternalVersion":false,
+      "tag_id":3
+    },
+    {
+      "function":"__fm",
+      "instance_name":"Click 2 Firebase through GTM",
+      "vendor_template_version":"1",
+      "vtp_mergeEventParameters":false,
+      "vtp_editParamTable":["list",["map","editParamKey",["macro",2],"editParamValue","eventCategory"],["map","editParamKey",["macro",3],"editParamValue","eventAction"],["map","editParamKey",["macro",4],"editParamValue","eventLabel"]],
+      "vtp_action":"measure",
+      "vtp_eventName":"click2Fire_GTM",
+      "tag_id":4
     }
   ],
   "predicates":[
@@ -61,10 +112,16 @@
       "function":"_eq",
       "arg0":["macro",0],
       "arg1":"openScreen"
+    },
+    {
+      "function":"_eq",
+      "arg0":["macro",0],
+      "arg1":"click2Fire_GTM"
     }
   ],
   "rules":[
-    [["if",0],["add",0,1]]
+    [["if",0],["add",0,1]],
+    [["if",1],["add",2,3]]
   ]
 },
 "runtime":
