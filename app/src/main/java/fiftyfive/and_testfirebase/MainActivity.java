@@ -1,10 +1,12 @@
 package fiftyfive.and_testfirebase;
 
 import android.content.Intent;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,7 +18,6 @@ import android.widget.Toast;
 
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.messaging.FirebaseMessagingService;
 
 import java.io.Serializable;
@@ -26,7 +27,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import static com.google.firebase.crash.FirebaseCrash.*;
-import static fiftyfive.and_testfirebase.MyFirebaseMessagingService.*;
+import com.google.firebase.crash.FirebaseCrash;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         // send a hard-coded hit to FB when the app is opened
         Bundle bundle = new Bundle();
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
+
         Log.d("TAG: ", "APP_OPEN sent.");
 
         // send a hit to GA to log the screen name
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 viewCart(bundle1, cart);
             }
         });*/
+
     }
 
     /*méthode pour faire partir un event après avoir cliqué sur un bouton
@@ -109,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAnalytics.logEvent("click2Fire_GTM", thisBundle);
         Log.d("TAG: ", "Click2FIre_GTM sent.");
         Toast.makeText(getApplicationContext(), "Click2FIre_GTM sent.", Toast.LENGTH_SHORT).show();
+
 
     }
 
@@ -143,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), selectedItemName +" has been added to cart.", Toast.LENGTH_SHORT).show();
     }
 
+
     //View your cart
     public void viewCart (Bundle bundle, Cart cart){
         Intent intent = new Intent(MainActivity.this, CartDetailsActivity.class);
@@ -151,6 +156,13 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, 0);
         Log.d("INFO: ", bundle.getString("screenName"));
     }
+
+    public String getPhoneNumber() {
+        TelephonyManager tMgr = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+        return tMgr.getLine1Number();
+
+    }
+
 
     @Override
     public void onStart() {
