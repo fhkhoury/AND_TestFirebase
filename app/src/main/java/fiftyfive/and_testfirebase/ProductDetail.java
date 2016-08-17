@@ -37,8 +37,12 @@ public class ProductDetail extends AppCompatActivity {
         itemSelected = new Item(zeBundle.getString("sku"), zeBundle.getString("name"), zeBundle.getString("category"), zeBundle.getString("brand"), zeBundle.getString("variant"), zeBundle.getDouble("price"));
         //Obtain the FirebaseAnalytics instance
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        // FIre the Firebase Analytics tag
+        // FIre the Firebase Analytics tags
         Bundle bundle = new Bundle();
+        bundle.putString("screenName", "Detail - " + itemSelected.name);
+        mFirebaseAnalytics.logEvent("openScreen", bundle);
+        Log.d("TAG: ", "screenName sent.");
+        bundle.clear();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemSelected.sku);
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
         Log.d("TAG: ", "VIEW_ITEM sent.");

@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
@@ -53,42 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
         // send a hit to GA to log the screen name
         final Bundle bundle1 = new Bundle();
-        bundle1.putString(FirebaseAnalytics.Param.VALUE, "HomePage");
+        bundle1.putString(FirebaseAnalytics.Param.VALUE, "HomePage");// TODO: Check si ça fonctionne
         bundle1.putString("screenName", "HomePage");
         mFirebaseAnalytics.logEvent("openScreen", bundle1);
         Log.d("TAG: ", "openScreen - HomePage sent.");
-
-        //checkons ce qu'il se passe dans le data layer
-        Log.d("GUIGUI : ", bundle1.getString("screenName"));
-        bundle1.putString("screenName","Blabla");
-        Log.d("GUIGUI2 : ", bundle1.getString("screenName"));
-
-
-        //Récupération du Spinner déclaré dans le fichier main.xml de res/layout
-        catalogue = (Spinner) findViewById(R.id.spinner);
-        //Création d'une liste d'élément à mettre dans le Spinner(pour l'exemple)
-        List exempleList = new ArrayList();
-        exempleList.add("Playstation - 400€");
-        exempleList.add("X-Box - 300€");
-        exempleList.add("PSP - 100€");
-
-		/*Le Spinner a besoin d'un adapter pour sa presentation alors on lui passe le context(this) et
-                un fichier de presentation par défaut( android.R.layout.simple_spinner_item)
-		Avec la liste des elements (exemple) */
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, exempleList );
-
-        /* On definit une présentation du spinner quand il est déroulé         (android.R.layout.simple_spinner_dropdown_item) */
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Enfin on passe l'adapter au Spinner et c'est tout
-        catalogue.setAdapter(adapter);
-
-        /*Button addToCart = (Button) findViewById(R.id.button_cliCkCart);
-        addToCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewCart(bundle1, cart);
-            }
-        });*/
 
     }
 
@@ -123,37 +89,11 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "App has crashed, Buddy!", Toast.LENGTH_SHORT).show();
     }
 
-    //Add to Cart
-    public void addToCart(View v){
-        String selectedItemName = catalogue.getSelectedItem().toString();
-        //Item item = new Item();
-        //item.getItemDetails(selectedItemName);
-        //cart.addItem(item);
-        // send a hard-coded hit to FB when the app is opened
-        Bundle bundle = new Bundle();
-        //Remplir le bundle avec les variables pour eeng
-        bundle.putString(FirebaseAnalytics.Param.PRODUCT_ID, "123456");
-        bundle.putString(FirebaseAnalytics.Param.PRODUCT_NAME, selectedItemName);
-        bundle.putString(FirebaseAnalytics.Param.PRODUCT_CATEGORY, "Console");
-        bundle.putDouble(FirebaseAnalytics.Param.PRICE, 399.99);
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_CART, bundle);
-        //Log.d("INFO: ", item.sku);
-        //Log.d("INFO: ", item.name);
-        //Log.d("INFO: ", item.category);
-        //Log.d("INFO: ", item.price);
-        Log.d("TAG: ", "ADD_TO_CART sent.");
-        Log.d("ACTION: ", selectedItemName +" has been added to cart.");
-        Toast.makeText(getApplicationContext(), selectedItemName +" has been added to cart.", Toast.LENGTH_SHORT).show();
-    }
-
-
     //View your cart
-    public void viewCart (Bundle bundle, Cart cart){
+    public void viewCart (View v) {
         Intent intent = new Intent(MainActivity.this, CartDetailsActivity.class);
-        intent.putExtra(SUPERBUNDLE, bundle); // pour passer le data layer
-        //intent.putExtra("cart", (Parcelable) cart.listeProduits);//pour passer le cart à envoyer
-        startActivityForResult(intent, 0);
-        Log.d("INFO: ", bundle.getString("screenName"));
+        //intent.putExtra("cart", (Parcelable) cart.listeProduits);//pour passer le cart à envoyer // TODO: C'est la classe cart details qui va récupérer le panier
+        startActivity(intent);
     }
 
     //View product list

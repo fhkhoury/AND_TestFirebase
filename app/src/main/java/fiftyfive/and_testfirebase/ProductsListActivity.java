@@ -32,8 +32,12 @@ public class ProductsListActivity extends AppCompatActivity {
 
         produitsDispo = fillCatalogue(produitsDispo);
 
-        //envoi du tag e-commerce "viewList"
         Bundle bundle = new Bundle();
+        bundle.putString("screenName", "ListeProduits - console");
+        mFirebaseAnalytics.logEvent("openScreen", bundle);
+        Log.d("TAG: ", "screenName sent.");
+        bundle.clear();
+        //envoi du tag e-commerce "viewList"
         bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "console");
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM_LIST, bundle);
         Log.d("TAG: ", "VIEW_ITEM_LIST sent.");
