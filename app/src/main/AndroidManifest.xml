@@ -28,6 +28,8 @@
         </intent-filter>
     </activity>
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -54,9 +56,12 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".CartDetailsActivity"></activity>
+        <activity android:name=".CartDetailsActivity" />
+        <activity android:name=".ProductsList" />
+        <activity android:name=".ProductsListActivity" />
+        <activity android:name=".ProductDetail" />
+        <activity android:name=".CheckoutActivity" />
+        <activity android:name=".PaymentConfirmationActivity"></activity>
     </application>
-
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
 </manifest>
