@@ -86,6 +86,9 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     public void pay(View v){
+        //Définir les user properties
+        mFirebaseAnalytics.setUserProperty("payment_method", paymentMethodChosen);
+        mFirebaseAnalytics.setUserProperty("shipping_method", shippingMethodChosen);
         //Envoyer le tag
         firebaseTagBundle.clear();
         firebaseTagBundle.putString(FirebaseAnalytics.Param.COUPON, "NONE");
