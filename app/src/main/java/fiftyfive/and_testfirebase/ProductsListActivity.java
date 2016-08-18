@@ -20,6 +20,7 @@ public class ProductsListActivity extends AppCompatActivity {
     private FirebaseAnalytics mFirebaseAnalytics;
     ArrayList<Item> produitsDispo  = new ArrayList<Item>();
     Bundle firebaseTagBundle = new Bundle();
+    Bundle gaTagBundle = new Bundle();
     Cart cart = new Cart();
     Bundle bundle4cart = new Bundle();
     Intent zeIntent = new Intent();
@@ -30,9 +31,10 @@ public class ProductsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products_list);
 
+        //récupération du panier
         bundle4cart = getIntent().getBundleExtra("cart");
         cart = cart.transformBundleToCart(bundle4cart);
-        Log.d("ACTION: ", "Bundle récupéré");
+        Log.d("ACTION: ", "Panier récupéré");
 
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -40,16 +42,6 @@ public class ProductsListActivity extends AppCompatActivity {
         //Création & remplissage de la liste de produits proposés
 
         produitsDispo = fillCatalogue(produitsDispo);
-
-
-        firebaseTagBundle.putString("screenName", "ListeProduits - console");
-        mFirebaseAnalytics.logEvent("openScreen", firebaseTagBundle);
-        Log.d("TAG: ", "screenName sent.");
-        firebaseTagBundle.clear();
-        //envoi du tag e-commerce "viewList"
-        firebaseTagBundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "console");
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM_LIST, firebaseTagBundle);
-        Log.d("TAG: ", "VIEW_ITEM_LIST sent.");
 
         //Récupération de la listview créée dans le fichier activity_products_list.xml
         availableProducts = (ListView) findViewById(R.id.listviewproducts);
@@ -94,6 +86,8 @@ public class ProductsListActivity extends AppCompatActivity {
             }
         });
 
+        trackopenScreen();
+        trackVIEW_ITEM_LIST();
     }
 
     public ArrayList<Item> fillCatalogue(ArrayList<Item> catalogue){
@@ -102,4 +96,43 @@ public class ProductsListActivity extends AppCompatActivity {
         catalogue.add(new Item("135791", "PSP Street", "Console portable", "Sony Corporation", "PSP Street Fifa 16 Edition", 99.90));
         return catalogue;
     }
+
+    public void trackopenScreen(){
+        firebaseTagBundle.putString("screenName", "ListeProduits - console");
+        mFirebaseAnalytics.logEvent("openScreen", firebaseTagBundle);
+        Log.d("TAG: ", "screenName sent.");
+    }
+
+    public void trackVIEW_ITEM_LIST(){
+        firebaseTagBundle.clear();
+        //envoi du tag e-commerce "viewList" pour FB
+        firebaseTagBundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "console");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM_LIST, firebaseTagBundle);
+        Log.d("TAG: ", "VIEW_ITEM_LIST sent.");
+        firebaseTagBundle.clear();
+        //envoi du tag e-commerce "viewList" pour GA;
+        gaTagBundle.putString("currencyCode", "EUR");
+        gaTagBundle.putParcelableArrayList("impressions", constructBundleImpressions(produitsDispo));
+        mFirebaseAnalytics.logEvent("ecommerce", gaTagBundle);
+        Log.d("TAG: ", "e-commerce-impressions sent.");
+    }
+
+    public ArrayList<Bundle> constructBundleImpressions(ArrayList<Item> produitsDispo){
+        ArrayList<Bundle> bundleImpressions = new ArrayList<>();
+        Bundle tempBundle = new Bundle();
+        for (int i=0; i<produitsDispo.size();i++){
+            tempBundle.putString("name", produitsDispo.get(i).name);
+            tempBundle.putString("id", produitsDispo.get(i).sku);
+            tempBundle.putString("price", produitsDispo.get(i).price.toString());
+            tempBundle.putString("brand", produitsDispo.get(i).brand);
+            tempBundle.putString("category", produitsDispo.get(i).category);
+            tempBundle.putString("variant", produitsDispo.get(i).variant);
+            tempBundle.putString("list", produitsDispo.get(i).category);
+            tempBundle.putInt("position", i+1);
+            bundleImpressions.add(tempBundle);
+        }
+        return bundleImpressions;
+
+    }
+
 }
