@@ -18,11 +18,11 @@ public class ProductDetail extends AppCompatActivity {
 
     private FirebaseAnalytics mFirebaseAnalytics;
     Intent zeIntent = new Intent();
-    Bundle zeBundle = new Bundle();
-    Item itemSelected ;
-    Cart cart = new Cart(); // pensez à récupérer le cart entre les activités
+    Bundle bundle4Item = new Bundle();
+    Bundle bundle4Cart = new Bundle();
+    Item itemSelected = new Item();
+    Cart cart = new Cart(); //TODO: pensez à récupérer le cart entre les activités
     Bundle firebaseTagBundle = new Bundle();
-    //les textviews
 
 
     @Override
@@ -32,23 +32,28 @@ public class ProductDetail extends AppCompatActivity {
 
         //Retrieve the bundle parse from Product List and convert it to item
         zeIntent = getIntent();
-        zeBundle = zeIntent.getBundleExtra("item");
+        bundle4Item = zeIntent.getBundleExtra("selectedItem");
+        bundle4Cart = zeIntent.getBundleExtra("cart");
+        cart = cart.transformBundleToCart(bundle4Cart);
+
+
+
         Log.d("INFO: ", "item récupéré.");
-        itemSelected = new Item(zeBundle.getString("sku"), zeBundle.getString("name"), zeBundle.getString("category"), zeBundle.getString("brand"), zeBundle.getString("variant"), zeBundle.getDouble("price"));
+        itemSelected = itemSelected.transformBundle2Item(bundle4Item);
+
         //Obtain the FirebaseAnalytics instance
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         // FIre the Firebase Analytics tags
-        Bundle bundle = new Bundle();
-        bundle.putString("screenName", "Detail - " + itemSelected.name);
-        mFirebaseAnalytics.logEvent("openScreen", bundle);
+        firebaseTagBundle.putString("screenName", "Detail - " + itemSelected.name);
+        mFirebaseAnalytics.logEvent("openScreen", firebaseTagBundle);
         Log.d("TAG: ", "screenName sent.");
-        bundle.clear();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemSelected.sku);
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+        Log.d("INFO; ", "Detail - " + itemSelected.name );
+        firebaseTagBundle.clear();
+        firebaseTagBundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemSelected.sku);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, firebaseTagBundle);
         Log.d("TAG: ", "VIEW_ITEM sent.");
 
-        //les layouts
-        LinearLayout zeLayout = (LinearLayout)findViewById(R.id.zeLayout);
+
         //les textviews
         TextView productName = (TextView)findViewById(R.id.name);
         assert productName != null;
@@ -78,10 +83,14 @@ public class ProductDetail extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     cart.addItem(itemSelected);
+                    // TODO : A refaire avec GTM
                     firebaseTagBundle.putString(FirebaseAnalytics.Param.PRODUCT_ID, itemSelected.sku);
                     firebaseTagBundle.putString(FirebaseAnalytics.Param.PRODUCT_NAME, itemSelected.name);
                     firebaseTagBundle.putString(FirebaseAnalytics.Param.PRODUCT_CATEGORY, itemSelected.category);
                     firebaseTagBundle.putDouble(FirebaseAnalytics.Param.PRICE, itemSelected.price);
+                    firebaseTagBundle.putDouble(FirebaseAnalytics.Param.VALUE, itemSelected.price);
+                    firebaseTagBundle.putString(FirebaseAnalytics.Param.QUANTITY, "1");
+                    firebaseTagBundle.putString(FirebaseAnalytics.Param.CURRENCY, "EUR");
                     mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_CART, firebaseTagBundle);
                     Toast.makeText(getApplicationContext(), itemSelected.name +" has been added to cart.", Toast.LENGTH_SHORT).show();
                     Log.d("TAG: ", "ADD_TO_CART sent.");
@@ -101,10 +110,10 @@ public class ProductDetail extends AppCompatActivity {
 
                     public void onClick(View v) {
                         // TODO: A REVOIR
-                        //Intent zeIntent = new Intent(ProductDetail.this, CartDetailsActivity.class);
-                        //ArrayList<Bundle> zeBundle = cart.cart2Bundles(cart);
-                        //zeIntent.putParcelableArrayListExtra("panier", zeBundle);
-                        //startActivityForResult(zeIntent, 0);
+                        Intent zeIntent = new Intent(ProductDetail.this, CartDetailsActivity.class);
+                        bundle4Cart = cart.transformCartToBundle();
+                        zeIntent.putExtra("cart", bundle4Cart);
+                        startActivityForResult(zeIntent, 0);
                     }
                 });
             }

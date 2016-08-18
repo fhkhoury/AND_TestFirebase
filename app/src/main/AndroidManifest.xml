@@ -59,7 +59,9 @@
         <activity android:name=".CartDetailsActivity" />
         <activity android:name=".ProductsList" />
         <activity android:name=".ProductsListActivity" />
-        <activity android:name=".ProductDetail"></activity>
+        <activity android:name=".ProductDetail" />
+        <activity android:name=".CheckoutActivity" />
+        <activity android:name=".PaymentConfirmationActivity"></activity>
     </application>
 
 </manifest>

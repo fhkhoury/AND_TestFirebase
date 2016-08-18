@@ -19,11 +19,20 @@ public class ProductsListActivity extends AppCompatActivity {
     ListView availableProducts ;
     private FirebaseAnalytics mFirebaseAnalytics;
     ArrayList<Item> produitsDispo  = new ArrayList<Item>();
+    Bundle firebaseTagBundle = new Bundle();
+    Cart cart = new Cart();
+    Bundle bundle4cart = new Bundle();
+    Intent zeIntent = new Intent();
+    Bundle bundle4SelectedItem = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products_list);
+
+        bundle4cart = getIntent().getBundleExtra("cart");
+        cart = cart.transformBundleToCart(bundle4cart);
+        Log.d("ACTION: ", "Bundle récupéré");
 
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -32,14 +41,14 @@ public class ProductsListActivity extends AppCompatActivity {
 
         produitsDispo = fillCatalogue(produitsDispo);
 
-        Bundle bundle = new Bundle();
-        bundle.putString("screenName", "ListeProduits - console");
-        mFirebaseAnalytics.logEvent("openScreen", bundle);
+
+        firebaseTagBundle.putString("screenName", "ListeProduits - console");
+        mFirebaseAnalytics.logEvent("openScreen", firebaseTagBundle);
         Log.d("TAG: ", "screenName sent.");
-        bundle.clear();
+        firebaseTagBundle.clear();
         //envoi du tag e-commerce "viewList"
-        bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "console");
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM_LIST, bundle);
+        firebaseTagBundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "console");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM_LIST, firebaseTagBundle);
         Log.d("TAG: ", "VIEW_ITEM_LIST sent.");
 
         //Récupération de la listview créée dans le fichier activity_products_list.xml
@@ -58,9 +67,6 @@ public class ProductsListActivity extends AppCompatActivity {
             map.put("name", produitsDispo.get(i).name);
             //on insère un élément description que l'on récupérera dans le textView description créé dans le fichier affichageitem.xml
             map.put("price", produitsDispo.get(i).price.toString()+ "€");
-            //on insère la référence à l'image (convertit en String car normalement c'est un int) que l'on récupérera dans l'imageView créé dans le fichier affichageitem.xml
-            //map.put("img", String.valueOf(R.drawable.word));
-            //enfin on ajoute cette hashMap dans la arrayList
             listItem.add(map);
         }
 
@@ -79,9 +85,10 @@ public class ProductsListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 //on récupère la HashMap contenant les infos de notre item (titre, description, img)
                 HashMap<String, String> map = (HashMap<String, String>) availableProducts.getItemAtPosition(position);
-                Intent zeIntent = new Intent(ProductsListActivity.this, ProductDetail.class);
-                Bundle zeBundle = produitsDispo.get(position).itemToBundle();
-                zeIntent.putExtra("item", zeBundle); // pour passer le data layer
+                zeIntent = new Intent(ProductsListActivity.this, ProductDetail.class);
+                bundle4SelectedItem = produitsDispo.get(position).transformItem2Bundle();
+                zeIntent.putExtra("selectedItem", bundle4SelectedItem); // pour passer le data laye
+                zeIntent.putExtra("cart", bundle4cart);
                 startActivityForResult(zeIntent, 0);
 
             }

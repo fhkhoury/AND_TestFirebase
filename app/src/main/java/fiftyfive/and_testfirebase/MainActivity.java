@@ -35,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
     Spinner catalogue;
     Cart cart = new Cart();
     public final static String SUPERBUNDLE = "DataLayer";
+    Bundle bundle4cart = cart.transformCartToBundle();
 
+    Bundle firebaseTagBundle = new Bundle();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,15 +47,14 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         // send a hard-coded hit to FB when the app is opened
-        Bundle bundle = new Bundle();
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, firebaseTagBundle);
         Log.d("TAG: ", "APP_OPEN sent.");
 
         // send a hit to GA to log the screen name
-        final Bundle bundle1 = new Bundle();
-        bundle1.putString(FirebaseAnalytics.Param.VALUE, "HomePage");// TODO: Check si ça fonctionne
-        bundle1.putString("screenName", "HomePage");
-        mFirebaseAnalytics.logEvent("openScreen", bundle1);
+        firebaseTagBundle.clear();
+        //firebaseTagBundle.putString(FirebaseAnalytics.Param.VALUE, "HomePage");// TODO: Check si ça fonctionne
+        firebaseTagBundle.putString("screenName", "HomePage");
+        mFirebaseAnalytics.logEvent("openScreen", firebaseTagBundle);
         Log.d("TAG: ", "openScreen - HomePage sent.");
 
     }
@@ -70,11 +71,11 @@ public class MainActivity extends AppCompatActivity {
     //méthode pour faire partir un event après avoir cliqué sur un bouton
     //event codé pour utilisation via GTM et envoyé sur Firebase & GA
     public void click2Fire_GTM(View v) {
-        Bundle thisBundle = new Bundle();
-        thisBundle.putString("eventCategory", "clic");
-        thisBundle.putString("eventAction", "fire");
-        thisBundle.putString("eventLabel", "click2Fire_GTM");
-        mFirebaseAnalytics.logEvent("click2Fire_GTM", thisBundle);
+        firebaseTagBundle.clear();
+        firebaseTagBundle.putString("eventCategory", "clic");
+        firebaseTagBundle.putString("eventAction", "fire");
+        firebaseTagBundle.putString("eventLabel", "click2Fire_GTM");
+        mFirebaseAnalytics.logEvent("click2Fire_GTM", firebaseTagBundle);
         Log.d("TAG: ", "Click2FIre_GTM sent.");
         Toast.makeText(getApplicationContext(), "Click2FIre_GTM sent.", Toast.LENGTH_SHORT).show();
 
@@ -89,23 +90,12 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "App has crashed, Buddy!", Toast.LENGTH_SHORT).show();
     }
 
-    //View your cart
-    public void viewCart (View v) {
-        Intent intent = new Intent(MainActivity.this, CartDetailsActivity.class);
-        //intent.putExtra("cart", (Parcelable) cart.listeProduits);//pour passer le cart à envoyer // TODO: C'est la classe cart details qui va récupérer le panier
-        startActivity(intent);
-    }
 
     //View product list
     public void viewProductsList(View v){
         Intent zeIntent = new Intent(MainActivity.this, ProductsListActivity.class);
-        startActivity(zeIntent);
-    }
-
-    public String getPhoneNumber() {
-        TelephonyManager tMgr = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
-        return tMgr.getLine1Number();
-
+        zeIntent.putExtra("cart", bundle4cart);
+        startActivityForResult(zeIntent, 0);
     }
 
 
