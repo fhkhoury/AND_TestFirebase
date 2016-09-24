@@ -50,21 +50,9 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, firebaseTagBundle);
         Log.d("TAG: ", "APP_OPEN sent.");
 
-        // send a hit to GA to log the screen name
-        firebaseTagBundle.clear();
-        //firebaseTagBundle.putString(FirebaseAnalytics.Param.VALUE, "HomePage");// TODO: Check si ça fonctionne
-        firebaseTagBundle.putString("screenName", "HomePage");
-        mFirebaseAnalytics.logEvent("openScreen", firebaseTagBundle);
-        Log.d("TAG: ", "openScreen - HomePage sent.");
 
     }
 
-    /*méthode pour faire partir un event après avoir cliqué sur un bouton
-    //event codé en dur et envoyé sur Firebase
-    public void click2Fire_hard(View v) {
-        Bundle myBundle = new Bundle();
-        mFirebaseAnalytics.logEvent("click2Fire_hard", myBundle);
-    }*/
 
 
 
