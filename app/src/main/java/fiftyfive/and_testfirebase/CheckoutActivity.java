@@ -24,7 +24,7 @@ public class CheckoutActivity extends AppCompatActivity {
     Bundle firebaseTagBundle = new Bundle();
     String shippingMethodChosen ;
     String paymentMethodChosen ;
-    int transactionId ;
+    String transactionId ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class CheckoutActivity extends AppCompatActivity {
         totalAmount.setText(cart.totalAmount.toString());
 
         //Générer num de commande aléatoire
-        transactionId = 0 + (int)(Math.random() * ((999999 - 1) + 1));
+        transactionId = String.valueOf(0 + (int)(Math.random() * ((999999 - 1) + 1)));
 
 
 
@@ -93,11 +93,11 @@ public class CheckoutActivity extends AppCompatActivity {
         firebaseTagBundle.clear();
         firebaseTagBundle.putString(FirebaseAnalytics.Param.COUPON, "NONE");
         firebaseTagBundle.putString(FirebaseAnalytics.Param.CURRENCY, "EUR");
-        firebaseTagBundle.putString(FirebaseAnalytics.Param.VALUE, cart.totalAmount.toString());
-        //firebaseTagBundle.putString(FirebaseAnalytics.Param.TAX, (cart.totalAmount * 0.2).toString());
-        firebaseTagBundle.putString(FirebaseAnalytics.Param.SHIPPING, shippingMethodChosen);
+        firebaseTagBundle.putDouble(FirebaseAnalytics.Param.VALUE, cart.totalAmount);
+        firebaseTagBundle.putDouble(FirebaseAnalytics.Param.TAX, (cart.totalAmount * 0.2));
+        firebaseTagBundle.putDouble(FirebaseAnalytics.Param.SHIPPING, (cart.totalAmount * 0.05));
         firebaseTagBundle.putString("payment_method", paymentMethodChosen);
-        //firebaseTagBundle.putString(FirebaseAnalytics.Param.TRANSACTION_ID, (String)transactionId);
+        firebaseTagBundle.putString(FirebaseAnalytics.Param.TRANSACTION_ID, transactionId);
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.ECOMMERCE_PURCHASE, firebaseTagBundle);
         zeIntent = new Intent(CheckoutActivity.this, PaymentConfirmationActivity.class);
         startActivity(zeIntent);

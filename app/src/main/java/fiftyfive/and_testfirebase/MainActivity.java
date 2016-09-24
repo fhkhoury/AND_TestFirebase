@@ -31,7 +31,7 @@ import com.google.firebase.crash.FirebaseCrash;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseAnalytics mFirebaseAnalytics;
+    private FirebaseAnalytics mFirebaseAnalytics ;
     Spinner catalogue;
     Cart cart = new Cart();
     public final static String SUPERBUNDLE = "DataLayer";
@@ -43,13 +43,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Obtain the FirebaseAnalytics instance.
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mFirebaseAnalytics= FirebaseAnalytics.getInstance(this);
 
-        // send a hard-coded hit to FB when the app is opened
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, firebaseTagBundle);
-        Log.d("TAG: ", "APP_OPEN sent.");
+        trackAPP_OPEN();
 
+<<<<<<< HEAD
+=======
+        trackopenScreen();
+>>>>>>> 05383b1f097960b8ff68c574ce3288943c985ad8
 
     }
 
@@ -92,6 +93,21 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
 
+    }
+
+    public void trackAPP_OPEN(){
+        // send a hard-coded hit to FB when the app is opened
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, firebaseTagBundle);
+        Log.d("TAG: ", "APP_OPEN sent.");
+    }
+
+    public void trackopenScreen(){
+        //send a hit to GA to log the screen name
+        firebaseTagBundle.clear();
+        //firebaseTagBundle.putString(FirebaseAnalytics.Param.VALUE, "HomePage");// TODO: Check si ça fonctionne
+        firebaseTagBundle.putString("screenName", "HomePage");
+        mFirebaseAnalytics.logEvent("openScreen", firebaseTagBundle);
+        Log.d("TAG: ", "openScreen - HomePage sent.");
     }
 
     @Override

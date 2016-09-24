@@ -10,9 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tagmanager.DataLayer;
+import com.google.android.gms.tagmanager.TagManager;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDetail extends AppCompatActivity {
 
@@ -23,6 +26,7 @@ public class ProductDetail extends AppCompatActivity {
     Item itemSelected = new Item();
     Cart cart = new Cart(); //TODO: pensez à récupérer le cart entre les activités
     Bundle firebaseTagBundle = new Bundle();
+    Bundle gaTagBundle = new Bundle();
 
 
     @Override
@@ -48,10 +52,8 @@ public class ProductDetail extends AppCompatActivity {
         mFirebaseAnalytics.logEvent("openScreen", firebaseTagBundle);
         Log.d("TAG: ", "screenName sent.");
         Log.d("INFO; ", "Detail - " + itemSelected.name );
-        firebaseTagBundle.clear();
-        firebaseTagBundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemSelected.sku);
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, firebaseTagBundle);
-        Log.d("TAG: ", "VIEW_ITEM sent.");
+        itemViewFB();
+        productViewGA();
 
 
         //les textviews
@@ -118,6 +120,53 @@ public class ProductDetail extends AppCompatActivity {
                 });
             }
         }
+    }
+
+    public void itemViewFB(){
+        firebaseTagBundle.clear();
+        firebaseTagBundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemSelected.sku);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, firebaseTagBundle);
+        Log.d("TAG: ", "VIEW_ITEM sent.");
+    }
+
+    public void productViewGA(){
+
+        Bundle productsBundle = new Bundle();
+        productsBundle.putString("name", itemSelected.name);
+        productsBundle.putString("id", itemSelected.sku);
+        productsBundle.putString("price", itemSelected.price.toString());
+        productsBundle.putString("brand", itemSelected.brand);
+        productsBundle.putString("category", itemSelected.category);
+        productsBundle.putString("variant", itemSelected.variant);
+
+        Bundle actionFieldBundle = new Bundle();
+        actionFieldBundle.putString("list", itemSelected.category);
+        actionFieldBundle.putBundle("products", productsBundle);
+
+        Bundle detailBundle = new Bundle();
+        detailBundle.putBundle("detail", actionFieldBundle);
+
+        //envoi du tag e-commerce "detail" pour GA;
+        gaTagBundle.clear();
+        gaTagBundle.putBundle("ecommerce", detailBundle);
+        mFirebaseAnalytics.logEvent("ecommerce", gaTagBundle);
+        Log.d("TAG: ", "product view sent.");
+
+        /* Measure a view of product details.
+        dataLayer.push("ecommerce",
+                DataLayer.mapOf(
+                        "detail", DataLayer.mapOf(
+                                "actionField", DataLayer.mapOf("list", "Apparel Gallery"),               // detail actions have an optional list property.
+                                "products", DataLayer.listOf(
+                                  DataLayer.mapOf(
+                                                "name", "Triblend Android T-Shirt",   // Name or ID is required.
+                                                "id", "12345",
+                                                "price", "15.25",
+                                                "brand", "Google",
+                                                "category", "Apparel",
+                                                "variant", "Gray")))));
+        */
+
     }
 
 
