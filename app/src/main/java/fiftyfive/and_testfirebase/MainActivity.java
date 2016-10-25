@@ -47,11 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
         trackAPP_OPEN();
 
-<<<<<<< HEAD
-=======
-        trackopenScreen();
->>>>>>> 05383b1f097960b8ff68c574ce3288943c985ad8
-
     }
 
 
